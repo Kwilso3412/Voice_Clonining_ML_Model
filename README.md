@@ -51,8 +51,48 @@ Yes for optimal training Tortoise TTS has these specific requirements:
 The code in the function 'generate_audiobook_cuda_optimized' in the 'Read_Script' file is currently set to random so the speaker will be random whne it reads the script. However this can be fine tuned and changed so that it sounds more natural and closer to the user speaking. 
 
 ### Metrics to change:
-- Low temperature (0.3-0.4) = minimal voice variation
-- Fewer autoregressive samples = less opportunity for voice drift
-- High cond_free_k (4.0-5.0) = forces adherence to your voice profile
-- Fixed random seeds = reproducible results
+Parameter Ranges for Voice Consistency:
 
+<ins>Temperature Range</ins>:
+
+- 0.1-0.3: Robotic but identical voice across chunks
+- 0.4-0.6: Balanced consistency with some naturalness
+- 0.7-0.9: Natural but voice may drift between chunks
+- 1.0-1.2: Very natural but high chance of voice changes
+Effect: Lower = same voice, higher = more natural but inconsistent
+
+<ins>Autoregressive Samples Range</ins>:
+
+- 4-8: Very consistent, lower quality speech
+- 12-16: Good consistency, decent quality
+- 32-48: Moderate consistency, good quality
+- 64-128: Poor consistency, best quality
+Effect: Fewer samples = same voice, more samples = better pronunciation but voice drift
+
+<ins>cond_free_k Range</ins>:
+
+- 0.5-1.0: Barely uses your voice profile (generic voices)
+- 1.5-2.5: Standard voice conditioning (original settings)
+- 3.0-4.0: Strong voice conditioning (recommended for consistency)
+- 4.5-6.0: Maximum voice conditioning (may sound forced)
+Effect: Higher = forces your exact voice characteristics
+
+<ins>top_p Range</ins>:
+
+- 0.3-0.5: Very limited word choices, consistent voice
+- 0.6-0.8: Balanced word variety and consistency
+- 0.9-0.95: High word variety, more voice variation
+Effect: Lower = same speaking patterns, higher = more natural variety
+
+<ins>Some Combinations</ins>:
+* **Maximum Consistency (Robotic)**:
+  - temperature=0.2, samples=8, cond_free_k=5.0, top_p=0.4
+
+* **Balanced (Recommended)**:
+  - temperature=0.4, samples=12, cond_free_k=4.0, top_p=0.6
+
+* **Natural but Risky**:
+  - temperature=0.7, samples=32, cond_free_k=2.5, top_p=0.8
+
+* **Key Trade-off**:
+  - Consistency vs Natural Sound - Lower values = identical voice but more robotic speech
