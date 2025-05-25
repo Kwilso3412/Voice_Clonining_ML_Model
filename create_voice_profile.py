@@ -163,8 +163,8 @@ def main():
     print(f"Found {len(audio_files)} audio files in {samples_folder}")
     
     # Check if we have enough samples
-    if len(audio_files) < 3:
-        print("WARNING: For best results, at least 3 samples are recommended")
+    if len(audio_files) < 5:
+        print("WARNING: For best results, at least 5 samples are recommended")
     elif len(audio_files) > 50:
         print("NOTE: Processing a large number of samples (>50) may take significant time")
         print("Would you like to proceed with all samples? (y/n)")
