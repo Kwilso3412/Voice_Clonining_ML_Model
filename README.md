@@ -96,3 +96,46 @@ Effect: Lower = same speaking patterns, higher = more natural variety
 
 * **Key Trade-off**:
   - Consistency vs Natural Sound - Lower values = identical voice but more robotic speech
+
+## Diffusion Iterations - Audio Quality Control:
+What It Does:
+- Refines raw audio through multiple denoising steps
+- Starts with noise → gradually creates clean speech
+- Each iteration = one step of audio improvement
+- More iterations = cleaner, higher quality audio
+
+<ins>Iteration Ranges:
+- 10-25: Very fast, rough/fuzzy audio quality
+- 25-50: Balanced speed/quality, decent clarity
+- 50-100: Good quality, clear speech
+- 100-200: High quality, very clean audio
+- 200+: Diminishing returns, extremely slow
+
+### Effects on Output:
+
+<ins>Low iterations (10-25)</ins>:
+- Fast generation
+- Fuzzy/distorted audio
+- Background noise/artifacts
+
+
+<ins>Medium iterations (50-100)</ins>:
+- Moderate speed
+- Clear, usable speech
+- Minimal artifacts
+
+
+<ins>High iterations (100+)</ins>:
+- Slow generation
+- Crystal clear audio
+- No background noise
+
+<ins>Voice Consistency Impact</ins>:
+- Does NOT affect voice consistency - that's controlled by temperature/samples
+- Only affects audio clarity - same voice, just cleaner/fuzzier
+- Can run low iterations for consistency testing, then increase for final quality
+
+<ins>Recommendeds</ins>:
+- Testing: 25 iterations (fast, see if voice is consistent)
+- Production: 50-100 iterations (good quality without excessive time)
+- Final/Important: 100+ iterations (maximum clarity)
