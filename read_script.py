@@ -148,13 +148,12 @@ def generate_audiobook_cuda_optimized(text_chunks, voice_profile, output_path, p
         }
     }
     
-    settings = speed_presets.get(preset, speed_presets["balanced"])
+    settings = speed_presets.get(preset)
     print(f"Using '{preset}' preset:")
     print(f"   Expected time: {settings['description']}")
     print(f"   Diffusion iterations: {settings['diffusion_iterations']}")
     print(f"   Autoregressive samples: {settings['num_autoregressive_samples']}")
     
-    # Fix conditioning latents for CUDA compatibility
     conditioning_latents = voice_profile['conditioning_latents']
     if isinstance(conditioning_latents, tuple):
         conditioning_latents = tuple(
@@ -199,7 +198,6 @@ def generate_audiobook_cuda_optimized(text_chunks, voice_profile, output_path, p
             print(f"Text preview: {chunk[:50]}...")
             print(f"Generating with {settings['diffusion_iterations']} diffusion steps...")
             
-            # OPTIMIZED TTS CALL - All best practices applied
             gen_audio = tts.tts(
                 text=chunk,
                 voice_samples=None,                                    # CRITICAL when using conditioning_latents
